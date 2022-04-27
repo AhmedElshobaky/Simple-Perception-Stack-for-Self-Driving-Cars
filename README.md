@@ -56,7 +56,7 @@ ipython lane_video.py
 ![video_output](https://user-images.githubusercontent.com/65557776/165562747-c2f82b0b-651a-4661-a607-6086b0487be4.png)
 
 - A new directory should be automatically created called output_videos and our output video should be saved there.
-![video_output](https://user-images.githubusercontent.com/65557776/165564501-14564228-fed4-4bfe-b33f-07bd1c57a7f2.png)
+![overlayed_lane_video](https://user-images.githubusercontent.com/65557776/165567367-bcd9243b-b462-42f2-8bbf-72cc7c70b7c1.png)
 
 Link to output video:
  https://drive.google.com/drive/folders/17ZdWBvtGSpbW7l-AJb6H5U5nit9g6d_m?usp=sharing
