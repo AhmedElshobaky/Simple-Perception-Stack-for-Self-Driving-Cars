@@ -255,7 +255,8 @@ class Lane:
       cv2.fillPoly(window_img, np.int_([right_line_pts]), (0,255, 0))
       
       result = cv2.addWeighted(out_img, 1, window_img, 0.3, 0)
-       
+      return result
+      """
       # Plot the figures 
       figure, ( ax1, ax2) = plt.subplots(2,1) # 2 rows, 1 column
       figure.set_size_inches(10, 10)
@@ -270,6 +271,7 @@ class Lane:
       ax1.set_title("Warped Frame")
       ax2.set_title("Warped Frame With Search Window")
       plt.show()
+        """
 
   #Locate lane line pixels indices
   def get_lane_line_indices_sliding_windows(self, plot=False):
@@ -360,11 +362,12 @@ class Lane:
       out_img[nonzeroy[left_lane_inds], nonzerox[left_lane_inds]] = [255, 0, 0]
       out_img[nonzeroy[right_lane_inds], nonzerox[right_lane_inds]] = [0, 0, 255]
                  
+      """
       # Plot the figure with the sliding windows
       figure, (ax1, ax2, ax3) = plt.subplots(3,1) # 3 rows, 1 column
       figure.set_size_inches(10, 10)
       figure.tight_layout(pad=3.0)
-      
+    
       ax1.imshow(cv2.cvtColor(self.orig_frame, cv2.COLOR_BGR2RGB))
       ax2.imshow(frame_sliding_window, cmap='gray')
       ax3.imshow(out_img)
@@ -375,7 +378,9 @@ class Lane:
       ax1.set_title("Original Frame")  
       ax2.set_title("Warped Frame with Sliding Windows")
       ax3.set_title("Detected Lane Lines with Sliding Windows")
-      plt.show()        
+      plt.show()
+      """
+      return self.left_fit, self.right_fit, frame_sliding_window, out_img
              
     return self.left_fit, self.right_fit
 
@@ -409,7 +414,7 @@ class Lane:
  
     # Combine the all lane lines with the lane line edges using bitwise or
     self.lane_line_markings = cv2.bitwise_or(rs_binary, sxbinary.astype(
-                              np.uint8))    
+                              np.uint8))
     return self.lane_line_markings
 
   #calculate the right and left peak of the histogram
@@ -460,7 +465,7 @@ class Lane:
       ax1.set_title("Original Frame With Lane Overlay")
       plt.show()   
  
-    return result 
+    return result  
 
   #transform the perspective of the binary image to birds eye view
   def perspective_transform(self, frame=None, plot=False):
@@ -488,22 +493,13 @@ class Lane:
  
     # Display the perspective transformed (i.e. warped) frame
     if plot == True:
-      warped_copy = self.warped_frame.copy()
-      warped_plot = cv2.polylines(warped_copy, np.int32([
+        warped_copy = self.warped_frame.copy()
+        warped_plot = cv2.polylines(warped_copy, np.int32([
                     self.desired_roi_points]), True, (147,20,255), 3)
- 
-      # Display the image
-      while(1):
-        cv2.imshow('Warped Image', warped_plot)
-             
-        # Press any key to stop
-        if cv2.waitKey(0):
-          break
- 
-      cv2.destroyAllWindows()   
+        return self.warped_frame, warped_plot
              
     return self.warped_frame 
-
+  
   #plotting our region of interest 
   def plot_roi(self, frame=None, plot=False):
 
@@ -515,16 +511,62 @@ class Lane:
  
     # Overlay trapezoid on the frame
     this_image = cv2.polylines(frame, np.int32([self.roi_points]), True, (147,20,255), 3)
- 
+    """
     #display the image
     cv2.imshow('ROI Image', this_image)
     cv2.waitKey(0)
     # Close all windows
     cv2.destroyAllWindows()
+    """
+    return this_image
 
-def videoHandler(vid_dir, DEBUGGING_MODE = False):
+# define a function for vertically 
+# concatenating images of different
+# widths 
+def vconcat_resize(img_list, interpolation 
+                   = cv2.INTER_CUBIC):
+      # take minimum width
+    w_min = min(img.shape[1] 
+                for img in img_list)
+      
+    # resizing images
+    im_list_resize = [cv2.resize(img,
+                      (w_min, int(img.shape[0] * w_min / img.shape[1])),
+                                 interpolation = interpolation)
+                      for img in img_list]
+    # return final image
+    return cv2.vconcat(im_list_resize)
+
+# define a function for horizontally 
+# concatenating images of different
+# heights 
+def hconcat_resize(img_list, interpolation= cv2.INTER_CUBIC):
+      # take minimum hights
+    h_min = min(img.shape[0] for img in img_list)
+      
+    # image resizing 
+    im_list_resize = [cv2.resize(img,(int(img.shape[1] * h_min / img.shape[0]),h_min), interpolation= interpolation) 
+                      for img in img_list]
+      
+    # return final image
+    return cv2.hconcat(im_list_resize)
+
+# define a function for concatenating
+# images of different sizes in
+# vertical and horizontal tiles
+def concat_tile_resize(list_2d, 
+                       interpolation = cv2.INTER_CUBIC):
+      # function calling for every 
+    # list of images
+    img_list_v = [hconcat_resize(list_h, interpolation = cv2.INTER_CUBIC) 
+                  for list_h in list_2d]
+      
+    # return final image
+    return vconcat_resize(img_list_v, interpolation=cv2.INTER_CUBIC)
+
+def videoHandler(vid_dir, vid_res = (1280,720), Debug = False):
     # variables to handle video frames
-    vid_res = (1280,720)
+    
     prev_leftx = None
     prev_lefty = None
     prev_rightx = None
@@ -541,16 +583,14 @@ def videoHandler(vid_dir, DEBUGGING_MODE = False):
 
     output_vid_dir = 'output_videos/{}_thresholded.mp4'.format(vid_dir[12:].split('.')[0])
     output_frames_per_second = 20.0                                                       
-    
-    
+ 
     # Load a video
     capture = cv2.VideoCapture(vid_dir)
 
     # Create a VideoWriter object so we can save the video output
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     result = cv2.VideoWriter(output_vid_dir,fourcc,output_frames_per_second,vid_res)
-    
-                                                               
+        
     while capture.isOpened():
         # Capture one frame at a time
         success, frame = capture.read() 
@@ -569,35 +609,65 @@ def videoHandler(vid_dir, DEBUGGING_MODE = False):
           # Perform thresholding to isolate lane lines
           lane_line_markings = lane_obj.get_line_markings()
 
-
+          roi = lane_obj.plot_roi(plot=True)
           # Perform the perspective transform to generate a bird's eye view
           # If Plot == True, show image with new region of interest
-          warped_frame = lane_obj.perspective_transform(plot=False)
-
+          warped_frame, warped_frame_debug = lane_obj.perspective_transform(plot=True)
+          
           # Generate the image histogram to serve as a starting point
           # for finding lane line pixels
           histogram = lane_obj.calculate_histogram(plot=False)
           # Find lane line pixels using the sliding window method 
-          left_fit, right_fit = lane_obj.get_lane_line_indices_sliding_windows(plot=False)
+          left_fit, right_fit, frame_sliding_window_debug, out_img_debug = lane_obj.get_lane_line_indices_sliding_windows(plot=True)
 
           # Fill in the lane line
-          lane_obj.get_lane_line_previous_window(left_fit, right_fit, plot=False)
+          prev_window_debug = lane_obj.get_lane_line_previous_window(left_fit, right_fit, plot=True)
           # Overlay lines on the original frame
           frame_with_lane_lines = lane_obj.overlay_lane_lines(plot=False)
 
           # Calculate lane line curvature (left and right lane lines)
-          lane_obj.calculate_curvature(DEBUGGING_MODE)
+          lane_obj.calculate_curvature(False)
 
           # Calculate center offset
-          lane_obj.calculate_car_position(DEBUGGING_MODE)
+          lane_obj.calculate_car_position(False)
         
           # Display curvature and center offset on image
           frame_with_lane_lines2 = lane_obj.display_curvature_offset(
           frame=frame_with_lane_lines, plot=False)
-          # Write the frame to the output video file
-          result.write(frame_with_lane_lines2)
-          # Display the frame 
-          cv2.imshow("Frame", frame_with_lane_lines2)
+          # Display the frame
+          if Debug:
+            #adjusting the shape of the debugging videos to display on top of our output video
+            width = int(lane_line_markings.shape[1] * 20 / 100)
+            height = int(lane_line_markings.shape[0] * 20 / 100)
+            dsize = (width, height)    
+            
+            #resizing debugging frames and changing its type if it's gray to RGP to be able to stack it together
+            lane_line_markings_s = cv2.resize(lane_line_markings, dsize)
+            lane_line_markings_s = cv2.cvtColor(lane_line_markings, cv2.COLOR_GRAY2RGB)
+            
+            warped_frame_debug_s = cv2.resize(warped_frame_debug, dsize)
+            warped_frame_debug_s = cv2.cvtColor(warped_frame_debug_s, cv2.COLOR_GRAY2RGB)
+            
+            frame_sliding_window_debug_s = cv2.resize(frame_sliding_window_debug, dsize)
+            frame_sliding_window_debug_s = cv2.cvtColor(frame_sliding_window_debug_s, cv2.COLOR_GRAY2RGB)
+            
+            out_img_debug_s = cv2.resize(out_img_debug, dsize)   
+            prev_window_debug_s = cv2.resize(prev_window_debug, dsize)
+            
+            #adding all the frames together
+            debugging_frames = [[lane_line_markings_s, warped_frame_debug_s,frame_sliding_window_debug_s , out_img_debug_s, prev_window_debug_s],
+                               [frame_with_lane_lines2]]
+            
+            #adding all the frames together
+            debugging_frame = concat_tile_resize(debugging_frames)
+            
+            # Write the frame to the output video file
+            result.write(debugging_frame)
+            cv2.imshow("Frame", debugging_frame)
+          else:
+            #not debugging mode 
+            result.write(frame_with_lane_lines2)
+            cv2.imshow("Frame", frame_with_lane_lines2)
 
           # Display frame for X milliseconds and check if q key is pressed
               # q == quit
@@ -632,8 +702,8 @@ def main():
         break
     vid = 'test_videos/' + file
     # Debug mode
-    DEBUGGING_MODE = bool(input("DEBUGGING_MODE: -True -False ").strip())
-    videoHandler(vid, DEBUGGING_MODE)
+    DEBUGGING_MODE = bool(int(input("DEBUGGING_MODE: -1 -0 ").strip()))
+    videoHandler(vid, Debug = DEBUGGING_MODE)
 
 
 if __name__ == "__main__":

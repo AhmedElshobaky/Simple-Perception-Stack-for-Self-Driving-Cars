@@ -519,7 +519,7 @@ class Lane:
     cv2.imshow('ROI Image', this_image)
     cv2.waitKey(0)
 
-def main():
+def main(): 
   while 1:
     files = os.listdir('test_images')
     print("======================================")
@@ -538,9 +538,8 @@ def main():
         break
     image = 'test_images/' + file
     # Debug mode
-    DEBUGGING_MODE = bool(input("DEBUGGING_MODE: -True -False ").strip())
-    
-    
+    DEBUGGING_MODE = bool(int(input("DEBUGGING_MODE: -1 -0 ").strip()))
+        
     original_frame = cv2.imread(image)
     cv2.imshow('image', original_frame)
     cv2.waitKey(0)
@@ -554,11 +553,10 @@ def main():
     # Perform the perspective transform to generate a bird's eye view
     # If Plot == True, show image with new region of interest
     warped_frame = lane_obj.perspective_transform(plot=DEBUGGING_MODE)
-    print()
-    print()
     # Generate the image histogram to serve as a starting point
     # for finding lane line pixels
-    histogram = lane_obj.calculate_histogram(plot=DEBUGGING_MODE)
+    histogram = (lane_obj.calculate_histogram(plot=DEBUGGING_MODE))
+    
     # Find lane line pixels using the sliding window method 
     left_fit, right_fit = lane_obj.get_lane_line_indices_sliding_windows(plot=DEBUGGING_MODE)
     # Fill in the lane line
