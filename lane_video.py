@@ -660,6 +660,7 @@ def videoHandler(vid_dir, vid_res = (1280,720), Debug = False):
             
             #adding all the frames together
             debugging_frame = concat_tile_resize(debugging_frames)
+            debugging_frame = cv2.resize(debugging_frame, (1280,720), interpolation =cv2.INTER_CUBIC)
             
             # Write the frame to the output video file
             result.write(debugging_frame)
