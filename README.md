@@ -2,15 +2,18 @@
 In this project we are going to create a simple perception stack for self-driving cars (SDCs.). Our only data source will be video streams from cameras for simplicity. We’re mainly going to be analyzing the road ahead, detecting the lane lines, detecting other cars/agents on the road, and estimating some useful information that may help other SDCs stacks.
 
 ## How to run the code:
-### Lane notebook (input: image):
- - Download lane.py file then open cmd in the directory of the lane.py and write:
-```
-ipython lane.py
-``` 
-![1st_img](https://user-images.githubusercontent.com/65557776/165554145-d8fe5900-fc82-4fae-96fc-78f4d8e3b3a6.png)
+
+After cloning the repositery and adding test images/videos in their directory 
+### run script.sh
+- Type either image or video based on the input
+
+![shell_1](https://user-images.githubusercontent.com/65557776/165972137-eb18714a-1126-4e15-a735-1512d4192e94.png)
+
+### Lane notebook (input: image): 
+![shell_2](https://user-images.githubusercontent.com/65557776/165972508-a7e7b474-b1b5-4b7f-91ce-58b74750466b.png)
 
 - Choose photo from directory and set DEBUGGING_MODE to either true or false
-![2nd_img](https://user-images.githubusercontent.com/65557776/165553628-da05b83d-d958-4694-8d05-a3dca29fa3c5.png)
+![shell_3](https://user-images.githubusercontent.com/65557776/165972780-05e4fadf-d7c1-4e09-928e-cac6859c2fd5.png)
 
 #### Output (if DEBUGGING_MODE = True):
 - original image:
@@ -41,19 +44,15 @@ ipython lane.py
 ![test1_thresholded](https://user-images.githubusercontent.com/65557776/165561161-26bd3343-ceb7-433a-b00e-f5fad014e6da.jpg)
 
 - Finally we can repeat the process using anyother image in the test_images directory and if you want to quit you can simply type 'q'
-![quitting using q](https://user-images.githubusercontent.com/65557776/165561315-73495e12-2318-4ffb-870a-1e5d45483164.png)
-
+![shell_4](https://user-images.githubusercontent.com/65557776/165973206-4ea6a40a-34b4-43af-9896-dbc8d810324d.png)
 
 ### Lane_video notebook (input: Video):
-- Download lane_video.py file then open cmd in the directory of the lane.py and write:
-```
-ipython lane_video.py
-```
+- Run script.sh and write video instead
 - Choose video from test_videos directory
-![1st_video_input](https://user-images.githubusercontent.com/65557776/165562066-75b4b44e-c9d0-44a6-a519-59785610a479.png)
+![shell_5](https://user-images.githubusercontent.com/65557776/165973940-1924bf86-47d3-4155-9fb0-770da9f55e38.png)
 
 - The output is a video with overlayed lane lines with red and blue colors and the lane itself with green color
-![video_output](https://user-images.githubusercontent.com/65557776/165562747-c2f82b0b-651a-4661-a607-6086b0487be4.png)
+![output_saved_video](https://user-images.githubusercontent.com/65557776/165974172-c19fe17d-da5e-4976-a23b-8bf690d2c1aa.png)
 
 - A new directory should be automatically created called output_videos and our output video should be saved there.
 ![overlayed_lane_video](https://user-images.githubusercontent.com/65557776/165567367-bcd9243b-b462-42f2-8bbf-72cc7c70b7c1.png)
