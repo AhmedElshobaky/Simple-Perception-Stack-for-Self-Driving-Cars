@@ -581,7 +581,7 @@ def videoHandler(vid_dir, vid_res = (1280,720), Debug = False):
     prev_left_fit2 = []
     prev_right_fit2 = []
 
-    output_vid_dir = 'output_videos/{}_thresholded.mp4'.format(vid_dir[12:].split('.')[0])
+    output_vid_dir = '../output_videos/{}_thresholded.mp4'.format(vid_dir[12:].split('.')[0])
     output_frames_per_second = 20.0                                                       
  
     # Load a video
@@ -686,7 +686,7 @@ def videoHandler(vid_dir, vid_res = (1280,720), Debug = False):
 
 def main():
   while 1:
-    files = os.listdir('test_videos')
+    files = os.listdir('../test_videos')
     print("======================================")
     print("=         TEST Videos           =")
     print("======================================")
@@ -701,7 +701,7 @@ def main():
     # quit program
     if file == 'q' or file == 'Q':
         break
-    vid = 'test_videos/' + file
+    vid = '../test_videos/' + file
     # Debug mode
     DEBUGGING_MODE = bool(int(input("DEBUGGING_MODE: -1 -0 ").strip()))
     videoHandler(vid, Debug = DEBUGGING_MODE)
