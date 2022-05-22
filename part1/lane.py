@@ -521,7 +521,7 @@ class Lane:
 
 def main(): 
   while 1:
-    files = os.listdir('test_images')
+    files = os.listdir('../test_images')
     print("======================================")
     print("=         TEST Images           =")
     print("======================================")
@@ -536,7 +536,7 @@ def main():
     # quit program
     if file == 'q' or file == 'Q':
         break
-    image = 'test_images/' + file
+    image = '../test_images/' + file
     # Debug mode
     DEBUGGING_MODE = bool(int(input("DEBUGGING_MODE: -1 -0 ").strip()))
         
@@ -572,11 +572,11 @@ def main():
     # Display curvature and center offset on image
     frame_with_lane_lines2 = lane_obj.display_curvature_offset(frame=frame_with_lane_lines, plot=True)
      
-    output_dir = 'output_images'
+    output_dir = '../output_images'
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     # save image containing highlighted defect
-    cv2.imwrite('output_images/{}_thresholded.jpg'.format(file.split('.')[0]),frame_with_lane_lines2)     
+    cv2.imwrite('../output_images/{}_thresholded.jpg'.format(file.split('.')[0]),frame_with_lane_lines2)     
     # Close all windows
     cv2.destroyAllWindows()
 
