@@ -63,6 +63,7 @@ Link to output video:
  
  
 ### Part 2 (input 2 -> lane and car detection)
+Before running this code you will need to download yolov3.cfg, yolov3.weights, and coco.names then put them in 'part1' directory
 - Select either 1 for image or 2 for video input
 
 #### YOLO_object_detection notebook (input 1 -> image):
