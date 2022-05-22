@@ -5,17 +5,19 @@ In this project we are going to create a simple perception stack for self-drivin
 
 After cloning the repositery and adding test images/videos in their directory 
 ### run script.sh
-- Type either image or video based on the input
+- Type either 1 for lane detection or 2 for lane and car detection
+![start](https://user-images.githubusercontent.com/65557776/169696603-108f89f5-8893-4c25-a8c1-3c6af0a899a1.png)
 
-![shell_1](https://user-images.githubusercontent.com/65557776/165972137-eb18714a-1126-4e15-a735-1512d4192e94.png)
+### Part 1 (input 1 -> lane detection)
+- Select either 1 for image or 2 for video input
+![lane photo or vid](https://user-images.githubusercontent.com/65557776/169696701-28b96913-ab71-45b9-9460-d3b1e67c5e83.png)
 
-### Lane notebook (input: image): 
-![shell_2](https://user-images.githubusercontent.com/65557776/165972508-a7e7b474-b1b5-4b7f-91ce-58b74750466b.png)
+#### Lane notebook (input 1 -> image): 
 
 - Choose photo from directory and set DEBUGGING_MODE to either true or false
-![shell_3](https://user-images.githubusercontent.com/65557776/165972780-05e4fadf-d7c1-4e09-928e-cac6859c2fd5.png)
+![lane image selection](https://user-images.githubusercontent.com/65557776/169696807-1bf95b44-e142-4299-b48d-46c53a5c49e2.png)
 
-#### Output (if DEBUGGING_MODE = True):
+##### Output (if DEBUGGING_MODE = True):
 - original image:
 ![orig](https://user-images.githubusercontent.com/65557776/165554543-19cced7e-3c45-4490-ae0c-f82d6aa2cf72.png)
 
@@ -46,16 +48,57 @@ After cloning the repositery and adding test images/videos in their directory
 - Finally we can repeat the process using anyother image in the test_images directory and if you want to quit you can simply type 'q'
 ![shell_4](https://user-images.githubusercontent.com/65557776/165973206-4ea6a40a-34b4-43af-9896-dbc8d810324d.png)
 
-### Lane_video notebook (input: Video):
-- Run script.sh and write video instead
+#### Lane_video notebook (input: Video):
+- Run script.sh and select video instead
 - Choose video from test_videos directory
-![shell_5](https://user-images.githubusercontent.com/65557776/165973940-1924bf86-47d3-4155-9fb0-770da9f55e38.png)
+![lane video selection](https://user-images.githubusercontent.com/65557776/169697099-82db2535-b85d-4851-8fd0-2f2bed84ebfa.png)
 
 - The output is a video with overlayed lane lines with red and blue colors and the lane itself with green color
 ![output_saved_video](https://user-images.githubusercontent.com/65557776/165974172-c19fe17d-da5e-4976-a23b-8bf690d2c1aa.png)
 
-- A new directory should be automatically created called output_videos and our output video should be saved there.
-![overlayed_lane_video](https://user-images.githubusercontent.com/65557776/165567367-bcd9243b-b462-42f2-8bbf-72cc7c70b7c1.png)
+- The output video should be saved in  output_videos directory.
 
 Link to output video:
  https://drive.google.com/drive/folders/17ZdWBvtGSpbW7l-AJb6H5U5nit9g6d_m?usp=sharing
+ 
+ 
+### Part 2 (input 2 -> lane and car detection)
+- Select either 1 for image or 2 for video input
+
+#### YOLO_object_detection notebook (input 1 -> image):
+
+- Choose image from directory
+
+![lane  and car image](https://user-images.githubusercontent.com/65557776/169697272-93318783-edd4-41c6-a310-b5255f563ad9.png)
+
+#### Output:
+- original image:
+
+![orig](https://user-images.githubusercontent.com/65557776/169697419-3e8ce9c2-282c-45a1-bad0-7926ea1adfc6.png)
+
+- Lane detected image
+
+![lane_detected_image](https://user-images.githubusercontent.com/65557776/169697457-e8ea0785-d0b9-4992-9e1f-acb9ebed1edf.png)
+
+- Final image:
+
+![result](https://user-images.githubusercontent.com/65557776/169698087-0067bc39-dd0f-4467-a1f0-00350ffa4084.png)
+
+- Result image is stored in the output_images directory
+
+#### YOLO_object_detection_video notebook (input 2 -> video):
+- Choose video from directory
+
+![car detection video](https://user-images.githubusercontent.com/65557776/169698396-966cf5ee-e982-4c3d-b5e7-f4f9219222e6.png)
+
+#### Output:
+- Result image is stored in the output_videos directory
+
+![output video](https://user-images.githubusercontent.com/65557776/169698538-2449ce1e-bd30-4d88-9827-83519cbb8c79.png)
+
+Link to output video:
+https://drive.google.com/drive/folders/17ZdWBvtGSpbW7l-AJb6H5U5nit9g6d_m?usp=sharing
+ 
+
+
+
