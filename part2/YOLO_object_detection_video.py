@@ -58,7 +58,7 @@ def videoHandler(vid_dir, vid_res = (1280,720), Debug = False):
     prev_left_fit2 = []
     prev_right_fit2 = []
 
-    output_vid_dir = '../output_videos/{}_part2_thresholded.mp4'.format(vid_dir[12:].split('.')[0])
+    output_vid_dir = '../output_videos/{}_part2_thresholded.mp4'.format(vid_dir[15:].split('.')[0])
     output_frames_per_second = 20.0                                                       
  
     # Load a video
